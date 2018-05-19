@@ -4,7 +4,9 @@
   "description": "This is the server for the hosting the static We the Party web app as well as the web services consumed by the WTP web app.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint index.js",
+    "pre-push": "lint"
   },
   "repository": {
     "type": "git",
@@ -21,5 +23,13 @@
   "bugs": {
     "url": "https://github.com/kevinmccartney/we-the-party-server/issues"
   },
-  "homepage": "https://github.com/kevinmccartney/we-the-party-server#readme"
+  "homepage": "https://github.com/kevinmccartney/we-the-party-server#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "@zeit/eslint-config-node": "^0.2.13",
+    "eslint": "^4.19.1",
+    "husky": "^0.14.3"
+  }
 }

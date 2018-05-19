@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "@zeit/eslint-config-node"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  }
+}

@@ -2,11 +2,15 @@
   "extends": [
     "@zeit/eslint-config-node"
   ],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
   },
   "rules": {
     "indent": ["error", 2]
-  }
+  },
+  "plugins": [
+      "react"
+  ]
 }

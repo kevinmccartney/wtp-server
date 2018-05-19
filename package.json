@@ -1,0 +1,25 @@
+{
+  "name": "wtp-server",
+  "version": "0.0.1",
+  "description": "This is the server for the hosting the static We the Party web app as well as the web services consumed by the WTP web app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinmccartney/we-the-party-server.git"
+  },
+  "keywords": [
+    "server",
+    "web",
+    "services",
+    "real-time"
+  ],
+  "author": "Kevin McCartney <hello@kevinmccartney.is>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinmccartney/we-the-party-server/issues"
+  },
+  "homepage": "https://github.com/kevinmccartney/we-the-party-server#readme"
+}

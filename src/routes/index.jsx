@@ -19,11 +19,6 @@ router.get('*', (req, res) => {
     </StaticRouter>
   );
 
-  if (context.status === 404) {
-    console.log(context);
-    res.status(404);
-  }
-
   res.render('index', {title: 'SSR React boi', content});
 });
 

@@ -39,7 +39,7 @@
     "morgan": "^1.9.0",
     "pug": "^2.0.3",
     "webpack": "^4.8.3",
-    "wtp-client": "git@github.com:/kevinmccartney/we-the-party-client#v0.0.2"
+    "wtp-client": "git@github.com:/kevinmccartney/we-the-party-client#v0.0.3"
   },
   "devDependencies": {
     "@zeit/eslint-config-node": "^0.2.13",

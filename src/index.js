@@ -3,10 +3,40 @@ import express from 'express';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import passport from 'passport';
+import session from 'express-session';
+import connectRedis from 'connect-redis';
+import passportSpotify from 'passport-spotify';
+import dotenv from 'dotenv';
 
+const SpotifyStrategy = passportSpotify.Strategy;
+
+dotenv.config();
+
+const RedisStore = connectRedis(session);
+
+import config from './config';
 import routes from './routes';
 
 const app = express();
+
+passport.use(new SpotifyStrategy({
+  clientID: config.spotify.clientId,
+  clientSecret: config.spotify.clientSecret,
+  callbackURL: 'http://localhost:3000/auth/spotify/callback'
+}, (accessToken, refreshToken, expires_in, profile, done) => done()));
+
+app.use(session({
+  store: new RedisStore({
+    url: config.redisStore.url
+  }),
+  resave: false,
+  saveUninitialized: false,
+  secret: config.redisStore.secret
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // view engine setup
 app.set('views', path.join(__dirname, '', 'views'));

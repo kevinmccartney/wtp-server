@@ -30,7 +30,11 @@ passport.use(new SpotifyStrategy({
   clientID: config.spotify.clientId,
   clientSecret: config.spotify.clientSecret,
   callbackURL: 'http://localhost:3000/auth/spotify/callback'
-}, (accessToken, refreshToken, expiresIn, profile, done) => done(null, profile)));
+}, (accessToken, refreshToken, expiresIn, profile, done) => {
+  console.log(profile);
+
+  done(null, profile);
+}));
 
 app.use(session({
   store: new RedisStore({

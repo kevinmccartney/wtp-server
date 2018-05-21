@@ -1,6 +1,7 @@
 import React from 'react';
 import express from 'express';
 import passport from 'passport';
+import session from 'express-session';
 
 import {renderToString} from 'react-dom/server';
 
@@ -46,6 +47,9 @@ router.get(
   passport.authenticate('spotify', {failureRedirect: '/fail'}),
   (req, res) => {
     // Successful authentication, redirect home.
+    console.log(req);
+    console.log(res);
+    session.accessCode = req.query.code;
     res.redirect('/');
   }
 );

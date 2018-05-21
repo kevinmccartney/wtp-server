@@ -11,3 +11,5 @@ https://github.com/thelinmichael/spotify-web-api-node#features
 http://mherman.org/blog/2015/01/31/local-authentication-with-passport-and-express-4/
 
 https://github.com/RisingStack/nodehero-authentication
+
+https://codeburst.io/isomorphic-web-app-react-js-express-socket-io-e2f03a469cd3

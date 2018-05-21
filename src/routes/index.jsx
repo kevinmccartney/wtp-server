@@ -1,7 +1,6 @@
 import React from 'react';
 import express from 'express';
 import passport from 'passport';
-import session from 'express-session';
 
 import {renderToString} from 'react-dom/server';
 
@@ -9,6 +8,8 @@ import StaticRouter from 'react-router-dom/StaticRouter';
 import {renderRoutes} from 'react-router-config';
 
 import routes from 'wtp-client/dist/routes';
+
+import spotifyApi from '../services/spotifyApi';
 
 function ensureAuthenticated(req, res, next) {
   const isAuthenticated = req.isAuthenticated();
@@ -33,6 +34,18 @@ router.get('/party', ensureAuthenticated, (req, res) => {
   res.render('index', {title: 'SSR React boi', content});
 });
 
+router.get('/api/me', (req, res) => {
+  const isAuthenticated = req.isAuthenticated();
+
+  if (isAuthenticated) {
+    // res.send('this is info about me!');
+    spotifyApi.getMe()
+      .then(data => res.json(data), err => res.json(err));
+  } else {
+    res.sendStatus(401);
+  }
+});
+
 router.get(
   '/auth/spotify',
   passport.authenticate('spotify'),
@@ -47,9 +60,6 @@ router.get(
   passport.authenticate('spotify', {failureRedirect: '/fail'}),
   (req, res) => {
     // Successful authentication, redirect home.
-    console.log(req);
-    console.log(res);
-    session.accessCode = req.query.code;
     res.redirect('/');
   }
 );

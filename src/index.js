@@ -12,6 +12,8 @@ import dotenv from 'dotenv';
 import config from './config';
 import routes from './routes';
 
+import spotifyApi from './services/spotifyApi';
+
 const SpotifyStrategy = passportSpotify.Strategy;
 const RedisStore = connectRedis(session);
 const app = express();
@@ -32,6 +34,8 @@ passport.use(new SpotifyStrategy({
   callbackURL: 'http://localhost:3000/auth/spotify/callback'
 }, (accessToken, refreshToken, expiresIn, profile, done) => {
   console.log(profile);
+  spotifyApi.setAccessToken(accessToken);
+  spotifyApi.setRefreshToken(refreshToken);
 
   done(null, profile);
 }));

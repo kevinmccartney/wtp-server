@@ -4,10 +4,10 @@ import passport from 'passport';
 
 import {renderToString} from 'react-dom/server';
 
-import StaticRouter from 'react-router-dom/StaticRouter';
+import {StaticRouter} from 'react-router-dom';
 import {renderRoutes} from 'react-router-config';
 
-import routes from 'wtp-client/dist/routes';
+import Router from 'wtp-client/dist/Router';
 
 import spotifyApi from '../services/spotifyApi';
 
@@ -27,7 +27,7 @@ router.get('/party', ensureAuthenticated, (req, res) => {
   const context = {};
   const content = renderToString(
     <StaticRouter location={req.url} context={context}>
-      {renderRoutes(routes)}
+      <Router />
     </StaticRouter>
   );
 
@@ -46,9 +46,21 @@ router.get('/api/me', (req, res) => {
   }
 });
 
+router.get('/api/me/player/devices', (req, res) => {
+  const isAuthenticated = req.isAuthenticated();
+
+  if (isAuthenticated) {
+    // res.send('this is info about me!');
+    spotifyApi.getMyDevices()
+      .then(data => res.json(data), err => res.json(err));
+  } else {
+    res.sendStatus(401);
+  }
+});
+
 router.get(
   '/auth/spotify',
-  passport.authenticate('spotify'),
+  passport.authenticate('spotify', {scope: ['user-read-playback-state'], showDialog: true}),
   () => {
     // The request will be redirected to spotify for authentication, so this
     // function will not be called.
@@ -57,7 +69,7 @@ router.get(
 
 router.get(
   '/auth/spotify/callback',
-  passport.authenticate('spotify', {failureRedirect: '/fail'}),
+  passport.authenticate('spotify', {failureRedirect: '/fail', showDialog: true}),
   (req, res) => {
     // Successful authentication, redirect home.
     res.redirect('/');
@@ -68,11 +80,12 @@ router.get('*', (req, res) => {
   const context = {};
   const content = renderToString(
     <StaticRouter location={req.url} context={context}>
-      {renderRoutes(routes)}
+      <Router />
     </StaticRouter>
   );
 
   res.render('index', {title: 'SSR React boi', content});
 });
+
 
 module.exports = router;

@@ -33,7 +33,6 @@ passport.use(new SpotifyStrategy({
   clientSecret: config.spotify.clientSecret,
   callbackURL: 'http://localhost:3000/auth/spotify/callback'
 }, (accessToken, refreshToken, expiresIn, profile, done) => {
-  console.log(profile);
   spotifyApi.setAccessToken(accessToken);
   spotifyApi.setRefreshToken(refreshToken);
 

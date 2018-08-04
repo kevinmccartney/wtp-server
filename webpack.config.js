@@ -2,23 +2,23 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './node_modules/wtp-client/dist/app',
+  entry: './src/client/index.js',
   devtool: 'source-map',
   output: {
-    filename: 'app.js',
-    path: path.resolve(__dirname, 'src/public')
+    filename: 'client.bundle.js',
+    path: path.resolve(__dirname, 'dist'),
   },
 
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
-      }
-    ]
-  }
+        loader: 'babel-loader',
+      },
+    ],
+  },
 };

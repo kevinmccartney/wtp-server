@@ -1,6 +1,5 @@
 # ignore built files
-dist/
-src/public/app.js*
+src/server/public/*
 
 # This is a tasty combo of the Node & MacOS .gitignores from github
 # https://github.com/github/gitignore/blob/master/Node.gitignore

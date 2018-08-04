@@ -31,7 +31,7 @@ passport.deserializeUser((user, done) => {
 passport.use(new SpotifyStrategy({
   clientID: config.spotify.clientId,
   clientSecret: config.spotify.clientSecret,
-  callbackURL: 'http://localhost:3000/auth/spotify/callback'
+  callbackURL: 'http://localhost:3000/auth/spotify/callback',
 }, (accessToken, refreshToken, expiresIn, profile, done) => {
   spotifyApi.setAccessToken(accessToken);
   spotifyApi.setRefreshToken(refreshToken);
@@ -41,11 +41,11 @@ passport.use(new SpotifyStrategy({
 
 app.use(session({
   store: new RedisStore({
-    url: config.redisStore.url
+    url: config.redisStore.url,
   }),
   secret: config.redisStore.secret,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
 
 app.use(passport.initialize());
@@ -56,7 +56,7 @@ app.set('views', path.join(__dirname, '', 'views'));
 app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

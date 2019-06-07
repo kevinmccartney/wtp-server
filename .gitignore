@@ -1,5 +1,7 @@
 # ignore built files
 src/server/public/*
+data/certbot/*
+certbot/*
 
 # This is a tasty combo of the Node & MacOS .gitignores from github
 # https://github.com/github/gitignore/blob/master/Node.gitignore

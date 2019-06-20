@@ -3,6 +3,8 @@
 # but until then...
 # https://www.patricksoftwareblog.com/using-docker-for-flask-application-development-not-just-production/
 
+postgresql/Dockerfile
+
 # https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
 # General
 .DS_Store

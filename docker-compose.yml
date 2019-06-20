@@ -1,27 +1,31 @@
-version: '3.6'
+version: "3"
+
 services:
-  uwsgi:
-    container_name: 'uwsgi'
-    build:
-      context: .
-      dockerfile: ./uwsgi.Dockerfile
-    ports:
-      - "5000"
-  nginx:
-    image: nginx:latest
-    container_name: 'nginx'
-    build:
-      context: .
-      dockerfile: ./nginx.Dockerfile
-    ports: 
-      - 80:80
-      - 443:443
+  app:
+    build: ./app
     volumes:
-      # - ./data/certbot/conf:/etc/letsencrypt
-      # - ./data/certbot/www:/var/www/certbot
-      - /data/nginx:/etc/nginx/conf.d
-  # certbot:
-  #   image: certbot/certbot
-  #   volumes:
-  #     - ./data/certbot/conf:/etc/letsencrypt
-  #     - ./data/certbot/www:/var/www/certbot
+      - app_data:/usr/src/app/project/static
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /www/static
+    depends_on:
+      - app
+    command: "nginx"
+  postgres:
+    restart: always
+    build: ./postgresql
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    expose:
+      - "5432"
+volumes:
+  postgres_data:
+  app_data:

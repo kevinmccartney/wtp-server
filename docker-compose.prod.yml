@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  app:
+    build: ./app
+    volumes:
+      - app_data:/usr/src/app/project/static
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+    ports:
+      - "8000:8000"
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /www/static
+    depends_on:
+      - app
+    command: "nginx"
+  postgres:
+    build: ./postgresql
+    expose:
+      - "5432"
+volumes:
+  app_data:

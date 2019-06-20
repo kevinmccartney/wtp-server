@@ -3,29 +3,23 @@ version: "3"
 services:
   app:
     build: ./app
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=1
     volumes:
-      - app_data:/usr/src/app/project/static
-    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+      - ./app/:/usr/src/app
+    command: flask run --host=0.0.0.0
     depends_on:
       - postgres
-    ports:
-      - "8000:8000"
-  nginx:
-    build: ./nginx
-    ports:
-      - "80:80"
-    volumes:
-      - /www/static
-    depends_on:
-      - app
-    command: "nginx"
   postgres:
     restart: always
     build: ./postgresql
     volumes:
       - postgres_data:/var/lib/postgresql
-    expose:
-      - "5432"
+    ports:
+      - "5432:5432"
 volumes:
   postgres_data:
   app_data:

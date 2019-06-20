@@ -3,13 +3,15 @@ version: "3"
 services:
   app:
     build: ./app
+    volumes:
+      - ./app:/home/flask/app/web
     ports:
       - "5000:5000"
     environment:
       - FLASK_APP=app.py
       - FLASK_DEBUG=1
     volumes:
-      - ./app/:/usr/src/app
+      - ./app/:/home/flask/app/web
     command: flask run --host=0.0.0.0
     depends_on:
       - postgres
@@ -17,9 +19,8 @@ services:
     restart: always
     build: ./postgresql
     volumes:
-      - postgres_data:/var/lib/postgresql
+      - postgres_data_dev:/var/lib/postgresql
     ports:
       - "5432:5432"
 volumes:
-  postgres_data:
-  app_data:
+  postgres_data_dev:

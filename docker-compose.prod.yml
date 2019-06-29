@@ -3,13 +3,13 @@ version: "3"
 services:
   app:
     build: ./app
-    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+    command: /usr/local/bin/gunicorn -w 2 -b :5000 app:app
     ports:
-      - "8000:8000"
+      - "5000"
   nginx:
     build: ./nginx
     ports:
-      - "80:80"
+      - "8000:8000"
     volumes:
       - /www/static
     depends_on:

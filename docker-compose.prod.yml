@@ -1,25 +1,39 @@
-version: "3"
+version: "3.5"
 
 services:
-  app:
+  flask:
+    container_name: wtp_flask
     build: ./app
     command: /usr/local/bin/gunicorn -w 2 -b :5000 app:app
     ports:
       - "5000"
-  nginx:
+    networks:
+      - wtp_net
+    depends_on:
+      - postgres
+  nginx_server:
+    container_name: wtp_nginx_server
     build: ./nginx
     ports:
-      - "8000:8000"
+      - "8000"
     volumes:
       - /www/static
     depends_on:
-      - app
+      - flask
+    networks:
+      - wtp_net
   postgres:
+    container_name: wtp_postgres
     restart: always
     build: ./postgresql
     volumes:
       - postgres_data_prod:/var/lib/postgresql
     expose:
       - "5432"
+    networks:
+      - wtp_net
 volumes:
   postgres_data_prod:
+networks:
+  wtp_net:
+    name: wtp_net

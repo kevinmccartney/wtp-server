@@ -1,7 +1,8 @@
-version: "3"
+version: "3.5"
 
 services:
-  app:
+  flask:
+    container_name: wtp_flask
     build: ./app
     volumes:
       - ./app:/home/flask/app/web
@@ -15,12 +16,20 @@ services:
     command: flask run --host=0.0.0.0
     depends_on:
       - postgres
+    networks:
+      - wtp_net
   postgres:
+    container_name: wtp_postgres
     restart: always
     build: ./postgresql
     volumes:
       - postgres_data_dev:/var/lib/postgresql
     ports:
       - "5432:5432"
+    networks:
+      - wtp_net
 volumes:
   postgres_data_dev:
+networks:
+  wtp_net:
+    name: wtp_net

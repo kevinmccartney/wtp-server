@@ -1,5 +1,10 @@
 from flask import Flask
-app = Flask(__name__)
+from flask_restplus import Api, Resource
+
+flask_app = Flask(__name__)
+app = Api(app = flask_app)
+
+name_space = app.namespace('main', description='Main APIs')
 
 @app.route('/')
 def hello_world():

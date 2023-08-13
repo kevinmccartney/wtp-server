@@ -1,8 +1,8 @@
 version: "3.5"
 
 services:
-  flask:
-    container_name: wtp_flask
+  api:
+    container_name: wtp_api
     build: ./app
     command: /usr/local/bin/gunicorn -w 2 -b :5000 app:app
     ports:
@@ -19,7 +19,7 @@ services:
     volumes:
       - /www/static
     depends_on:
-      - flask
+      - api
     networks:
       - wtp_net
   postgres:

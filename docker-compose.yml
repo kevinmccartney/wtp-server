@@ -1,11 +1,11 @@
 version: "3.5"
 
 services:
-  flask:
-    container_name: wtp_flask
-    build: ./app
+  api:
+    container_name: wtp_api
+    build: ./api
     volumes:
-      - ./app:/home/flask/app/web
+      - ./api:/home/flask/app/web
     ports:
       - "5000:5000"
     environment:
@@ -18,6 +18,19 @@ services:
       - postgres
     networks:
       - wtp_net
+  api_doc:
+    build:
+      context: ./api
+    container_name: wtp_api_docs
+    image: swaggerapi:swagger-ui
+    volumes:
+      - ./api/docs:/etc/swagger
+    environment:
+      - SWAGGER_JSON=/etc/swagger/swagger.json
+    networks:
+      - wtp_net
+    ports:
+      - "88888"
   postgres:
     container_name: wtp_postgres
     restart: always
